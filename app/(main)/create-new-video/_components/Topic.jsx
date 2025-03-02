@@ -25,12 +25,14 @@ const suggestions = [
 
 function Topic({onHandleInputChange}) {
   const [selectedTopic, setSelectedTopic] = useState();
+  const [selectedScriptIndex, setSelectedScriptIndex] = useState();
   const [scripts, setScripts] = useState();
   const [loading, setLoading] = useState(false);
 
 
   const GenerateScript = async() => {
     setLoading(true);
+    setSelectedScriptIndex(null);
     try{
       const result = await axios.post('/api/generate-script', {
         topic: selectedTopic
@@ -78,16 +80,24 @@ function Topic({onHandleInputChange}) {
             </TabsContent>
         </Tabs>
 
-        {scripts?.length > 0 && <div className='grid grid-cols-2 gap-5'>
-          {scripts?.map((item, index) => (
-            <div>
-              <h2>{item.content}</h2>
-            </div>
-          ))}
+        {scripts?.length > 0 &&
+        <div className='mt-3'>
+          <h2>Select the Script</h2>
+          <div className='grid grid-cols-2 gap-5 mt-1'>
+            {scripts?.map((item, index) => (
+              <div key={index} className={`p-3 border rounded-lg cursor-pointer
+                ${selectedScriptIndex === index && 'border-white bg-secondary'}
+              `}
+              onClick={() => setSelectedScriptIndex(index)}
+              >
+                <h2 className='line-clamp-4 text-sm text-gray-300'>{item.content}</h2>
+              </div>
+            ))}
+          </div>
         </div>}
 
       </div>
-      <Button disabled={loading} className='mt-3' size="sm" onClick={GenerateScript}> {loading ? <Loader2Icon className='animate-spin'/>: <SparklesIcon/>} Generate Script </Button>
+    {!scripts &&   <Button disabled={loading} className='mt-3' size="sm" onClick={GenerateScript}> {loading ? <Loader2Icon className='animate-spin'/>: <SparklesIcon/>} Generate Script </Button>}
     </div>
   )
 }
