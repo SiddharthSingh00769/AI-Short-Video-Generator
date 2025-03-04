@@ -6,13 +6,19 @@ import VideoStyle from './_components/VideoStyle'
 import Voice from './_components/Voice'
 import Captions from './_components/Captions'
 import { Button } from '@/components/ui/button'
-import { WandSparkles } from 'lucide-react'
+import { Loader2Icon, WandSparkles } from 'lucide-react'
 import Preview from './_components/Preview'
 import axios from 'axios'
+import { useMutation } from 'convex/react'
+import { api } from '@/convex/_generated/api'
+import { useAuthContext } from '@/app/provider'
 
 function CreateNewVideo() {
 
   const [formData, setFormData] = useState();
+  const CreateInitialVideoRecord = useMutation(api.videoData.CreateVideoData);
+  const {user} = useAuthContext();
+  const [loading, setLoading] = useState(false);
 
   const onHandleInputChange = (fieldName, fieldValue) => {
     setFormData(prev => ({
@@ -28,12 +34,27 @@ function CreateNewVideo() {
       alert('Please select all the options.');
       return;
     }
+    setLoading(true);
+
+    //Save Video data first
+    const resp = await CreateInitialVideoRecord({
+            title: formData.title,
+            topic: formData.topic,
+            script: formData.script,
+            videoStyle: formData.videoStyle,
+            caption: formData.caption,
+            voice: formData.voice,
+            uid: user?._id,
+            createdBy: user?.email
+    });
+    console.log(resp);
 
     const result = await axios.post('/api/generate-video-data', {
       ...formData
     })
 
     console.log(result);
+    setLoading(false);
   }
 
   return (
@@ -50,8 +71,9 @@ function CreateNewVideo() {
                 <Captions onHandleInputChange={onHandleInputChange}/>
 
                 <Button className="w-full mt-5"
+                disabled={loading}
                 onClick={GenerateVideo}
-                ><WandSparkles/> Generate Video</Button>
+                > { loading?<Loader2Icon className='animate-spin' />: <WandSparkles/> } Generate Video</Button>
             </div>
             <div>
               <Preview formData={formData}/>
