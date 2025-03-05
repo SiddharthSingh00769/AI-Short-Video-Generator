@@ -60,6 +60,24 @@ const {
         },
       ],
     });
+
+    export const GenerateImageScript = model.startChat({
+      generationConfig,
+      history: [
+        {
+          role: "user",
+          parts: [
+            {text: "Generate Image Promt of {style} style with all details for each scene for 30 seconds video : script: {script}\n- Just give specific image prompt depending on the story line\n- Do not give camera angle image prompt\n- Follow thw following schema and return JSON data (Max 4-5 images)\n- Do not mention any extra detail in script content\n- [\n    {\n      imagePrompt:'',\n      sceneContent: '<Script Content>\n    }\n]\n"},
+          ],
+        },
+        {
+          role: "model",
+          parts: [
+            {text: "I am able to generate image prompts based on the script you provide, but I am currently unable to generate images myself. This capability is only enabled for early testers. However, I can provide you with the JSON data containing specific image prompts based on your script.\n\nPlease provide the style and script so I can create the JSON data for you.\n"},
+          ],
+        },
+      ],
+    });
   
     // const result = await chatSession.sendMessage("INSERT_INPUT_HERE");
     // console.log(result.response.text());
