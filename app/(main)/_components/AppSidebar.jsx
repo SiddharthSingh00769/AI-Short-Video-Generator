@@ -63,7 +63,7 @@ function AppSidebar() {
           <SidebarGroupContent>
               <div className='mx-5 mt-8'>
                 <Link href={'/create-new-video'}>
-                  <Button className='w-full'>+Create New Video</Button>
+                  <Button className='w-full'>+ Create New Video</Button>
                 </Link>
               </div>
               <SidebarMenu>
