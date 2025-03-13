@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { useConvex } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { useAuthContext } from '@/app/provider';
+import moment from 'moment';
+import { RefreshCcw } from 'lucide-react';
 
 function VideoList() {
     const [videoList, setVideoList] = useState([]);
@@ -24,7 +26,21 @@ function VideoList() {
             uid: user?._id
         })
         setVideoList(result);
-        console.log(result);
+        const isPendingVideo = result?.find((item) => item.status == 'pending');
+        isPendingVideo && GetPendingVideoStatus(isPendingVideo);
+    }
+
+    const GetPendingVideoStatus = (pendingVideo) => {
+        const intervalId = setInterval(async() => {
+            const result = await convex.query(api.videoData.GetVideoById, {
+                videoId : pendingVideo?._id
+            })
+
+            if(result?.status == 'completed'){
+                clearInterval(intervalId);
+                GetUserVideoList();
+            }
+        }, 5000)
     }
 
     return (
@@ -38,15 +54,29 @@ function VideoList() {
                 </Link>
             </div>
             :
-            <div>
-                {videoList.map((video, index) => {
-                    <div>
-                        <Image src={video?.images[0]} 
+            <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 mt-10'>
+                {videoList.map((video, index) => (
+                    <Link key={index} href={'/play-video/'+video?._id}>
+                    <div className='relative'>
+                    {video?.status == 'completed' ?  <Image 
+                        src={video?.images[0]} 
                         alt={video?.title} 
-                        width={500} height={500}
-                        />
+                        width={500} 
+                        height={500} 
+                        className='w-full object-cover rounded-xl aspect[2/3]'
+                        /> :
+                        <div className='aspect-[2/3] p-5 w-full rounded-xl bg-slate-900 flex items-center justify-center gap-2'>
+                            <RefreshCcw className='animate-spin' />
+                            <h2>Generating...</h2>
+                        </div>    
+                    }
+                        <div className='absolute bottom-3 px-5 w-full'>
+                            <h2>{video?.title}</h2>
+                            <h2 className='text-sm'>{ moment(video?._creationTime).fromNow() }</h2>
+                        </div>
                     </div>
-                })}
+                    </Link>
+                ))}
             </div>
             }
         </div>
