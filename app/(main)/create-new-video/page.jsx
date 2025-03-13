@@ -28,6 +28,10 @@ function CreateNewVideo() {
     console.log(formData);
   }
 
+  if(user?.credits <= 0){
+    alert('Please add more credits to your account!');
+    return;
+  }
 
   const GenerateVideo = async() => {
     if(!formData?.topic || !formData?.script || !formData?.videoStyle || !formData?.caption || !formData?.voice){
