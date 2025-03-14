@@ -75,11 +75,12 @@ function CreateNewVideo() {
                 <Voice onHandleInputChange={onHandleInputChange}/>
 
                 <Captions onHandleInputChange={onHandleInputChange}/>
-
-                <Button className="w-full mt-5"
-                disabled={loading}
-                onClick={GenerateVideo}
-                > { loading?<Loader2Icon className='animate-spin' />: <WandSparkles/> } Generate Video</Button>
+                <Link href={'/dashboard'}>
+                  <Button className="w-full mt-5"
+                  disabled={loading}
+                  onClick={GenerateVideo}
+                  > { loading?<Loader2Icon className='animate-spin' />: <WandSparkles/> } Generate Video</Button>
+                </Link>
             </div>
             <div>
               <Preview formData={formData}/>
