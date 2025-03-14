@@ -31,7 +31,7 @@ function PlayVideo() {
       </div>
       <div>
         {/* Video Information */}
-        <VideoInfo/>
+        <VideoInfo videoData = {videoData} />
       </div>
     </div>
   )
