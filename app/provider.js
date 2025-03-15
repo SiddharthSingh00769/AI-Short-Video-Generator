@@ -7,6 +7,7 @@ import { auth } from '@/configs/firebaseConfig'
 import { AuthContext } from './context/AuthContext'
 import { ConvexProvider, ConvexReactClient, useMutation } from "convex/react";
 import { api } from '@/convex/_generated/api'
+import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 
 function Provider({ children }) {
 
@@ -31,6 +32,7 @@ function Provider({ children }) {
   return (
     <div>
         <AuthContext.Provider value = {{user}} >
+        <PayPalScriptProvider options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID }}>
             <NextThemesProvider
             attribute="class"
             defaultTheme="dark"
@@ -39,6 +41,7 @@ function Provider({ children }) {
             >
                 {children}
             </NextThemesProvider>
+         </PayPalScriptProvider>   
         </AuthContext.Provider>  
     </div>
   )

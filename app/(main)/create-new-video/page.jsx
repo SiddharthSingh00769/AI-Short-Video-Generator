@@ -12,6 +12,7 @@ import axios from 'axios'
 import { useMutation } from 'convex/react'
 import { api } from '@/convex/_generated/api'
 import { useAuthContext } from '@/app/provider'
+import Link from 'next/link'
 
 function CreateNewVideo() {
 
