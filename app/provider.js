@@ -31,7 +31,7 @@ function Provider({ children }) {
 
   return (
     <div>
-        <AuthContext.Provider value = {{user}} >
+        <AuthContext.Provider value = {{user, setUser}} >
         <PayPalScriptProvider options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID }}>
             <NextThemesProvider
             attribute="class"

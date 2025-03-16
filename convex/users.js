@@ -27,3 +27,16 @@ export const CreateNewUser = mutation({
        return user[0];
     }
 })
+
+export const UpdateUserCredits = mutation({
+    args: {
+        uid: v.id('users'),
+        credits: v.number()
+    },
+    handler: async (ctx, args) => {
+        const result = await ctx.db.patch(args.id, {
+            credits: args.credits
+        });
+        return result;
+    }
+})

@@ -13,6 +13,7 @@ import { useMutation } from 'convex/react'
 import { api } from '@/convex/_generated/api'
 import { useAuthContext } from '@/app/provider'
 import Link from 'next/link'
+import { toast } from 'sonner'
 
 function CreateNewVideo() {
 
@@ -29,13 +30,12 @@ function CreateNewVideo() {
     console.log(formData);
   }
 
-  if(user?.credits <= 0){
-    alert('Please add more credits to your account!');
-    return;
-  }
-
   const GenerateVideo = async() => {
-    if(!formData?.topic || !formData?.script || !formData?.videoStyle || !formData?.caption || !formData?.voice){
+    if(user?.credits <= 0){
+      toast('You have no credits to create a video.');
+      return;
+    }
+    else if(!formData?.topic || !formData?.script || !formData?.videoStyle || !formData?.caption || !formData?.voice){
       alert('Please select all the options.');
       return;
     }
