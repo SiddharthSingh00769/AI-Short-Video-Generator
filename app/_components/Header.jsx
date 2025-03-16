@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import Authentication from './Authentication'
 import { useAuthContext } from '../provider'
 import Link from 'next/link'
+import { Loader2Icon } from 'lucide-react'
 
 function Header() {
   const {user} = useAuthContext();
@@ -17,7 +18,7 @@ function Header() {
 
         <div>
          {!user ? <Authentication>
-            <Button>Get Started</Button>
+            <Button><Loader2Icon className='animate-spin' /> Please Wait</Button>
           </Authentication>
           :<div className='flex items-center gap-3'>
             <Link href={'/dashboard'}>
