@@ -3,9 +3,9 @@ import { v } from "convex/values";
 
 export const CreateNewUser = mutation({
     args: {
-        name: v.string(),
-        email: v.string(),
-        pictureURL: v.string()
+        name: v.optional(v.string()),
+        email: v.optional(v.string()),
+        pictureURL: v.optional(v.string())
     },
     handler: async (ctx, args) => {
        //If user already exist?
@@ -13,9 +13,9 @@ export const CreateNewUser = mutation({
 
        if(!user[0]?.email){
         const userData = {
-            name: args.name,
-            email: args.email,
-            pictureURL: args?.pictureURL,
+            name: args.name || "Sample",
+            email: args.email || "sample@gmail.com",
+            pictureURL: args?.pictureURL || "",
             credits: 3
         }
         //Create new user
