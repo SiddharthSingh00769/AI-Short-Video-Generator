@@ -18,7 +18,7 @@ function Header() {
 
         <div>
          {!user ? <Authentication>
-            <Button><Loader2Icon className='animate-spin' /> Please Wait</Button>
+            <Button><Loader2Icon className='animate-spin' /> Please Wait...</Button>
           </Authentication>
           :<div className='flex items-center gap-3'>
             <Link href={'/dashboard'}>
