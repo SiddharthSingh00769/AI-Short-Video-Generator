@@ -17,7 +17,7 @@ function Hero() {
       <div className='mt-7 flex gap-8'>
         <Button size="lg" variant="secondary">Explore</Button>
         {!user ? <Authentication>
-          <Button size="lg"><Loader2Icon className='animate-spin' />Please wait</Button>
+          <Button size="lg"><Loader2Icon className='animate-spin' />Please Wait...</Button>
         </Authentication>
         : <Link href={'/dashboard'}>
             <Button size="lg">Dashboard</Button>
