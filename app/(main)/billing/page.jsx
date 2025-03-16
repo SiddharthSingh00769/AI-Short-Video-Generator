@@ -1,9 +1,12 @@
 "use client"
 import { useAuthContext } from "@/app/provider"
 import { Button } from "@/components/ui/button"
+import { api } from "@/convex/_generated/api"
 import { PayPalButtons } from "@paypal/react-paypal-js"
+import { useMutation } from "convex/react"
 import { CircleDollarSign } from "lucide-react"
 import React from 'react'
+import { toast } from "sonner"
 export const creditPlans = [
     {
         credits: 10,
@@ -28,11 +31,20 @@ export const creditPlans = [
 ]
 
 function Billing(){
-    const { user } = useAuthContext();
-
-    const onPaymentSuccess = () => {
+    const { user, setUser } = useAuthContext();
+    const updateUserCredits = useMutation(api.users.UpdateUserCredits);
+    const onPaymentSuccess = async(cost, credits) => {
         //Update user credits
+        const result = await updateUserCredits({
+            uid: user?._id,
+            credits: Number(user?.credits) + Number(credits)
+        });
+        setUser(prev => ({
+            ...prev,
+            credits: Number(user?.credits) + Number(credits)
+        }));
 
+        toast('Credits added successfully!');
     }
 
     return (
@@ -59,7 +71,8 @@ function Billing(){
                                 <h2 className="font-medium text-xl">${plan.cost}</h2>
                                 {/* <Button>Buy Now</Button> */}
                                 <PayPalButtons style={{ layout: "horizontal" }}
-                                onApprove={() => onPaymentSuccess()}
+                                onApprove={() => onPaymentSuccess(plan?.cost, plan?.credits)}
+                                onCancel={() => toast('Payment Cancelled!')}
                                 createOrder={(data, actions) => {
                                     return actions?.order?.create({
                                         purchase_units: [

@@ -1,8 +1,12 @@
+"use client"
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import Authentication from './Authentication'
+import { useAuthContext } from '../provider'
+import Link from 'next/link'
 
 function Hero() {
+  const {user} = useAuthContext();
   return (
     <div className='p-10 flex flex-col items-center justify-center mt-24 md:px-20 lg:px-36 xl:px-48'>
       <h2 className='text-6xl font-bold text-center'>AI Short Video Generator</h2>
@@ -10,10 +14,15 @@ function Hero() {
         ✨ Create, edit, and publish engaging shorts with ease!
       </p>
       <div className='mt-7 flex gap-8'>
+      <Link href={'/create-new-video'}>
         <Button size="lg" variant="secondary">Explore</Button>
-        <Authentication>
+      </Link>
+        {!user ? <Authentication>
           <Button size="lg">Get Started</Button>
         </Authentication>
+        : <Link href={'/dashboard'}>
+            <Button size="lg">Dashboard</Button>
+          </Link>}
       </div>
     </div>
   )
