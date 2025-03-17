@@ -8,7 +8,7 @@ export const CreateNewUser = mutation({
         pictureURL: v.string()
     },
     handler: async (ctx, args) => {
-       //If user already exist?
+       //If user already exist??
        const user = await ctx.db.query('users').filter((q) => q.eq(q.field('email'), args.email)).collect();
 
        if(!user[0]?.email){
