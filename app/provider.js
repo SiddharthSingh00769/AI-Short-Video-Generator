@@ -17,15 +17,18 @@ function Provider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async(user) => {
       console.log(user);
+      setUser(user);
 
-      const result = await CreateUser({
-        name: user?.displayName,
-        email: user?.email,
-        pictureURL: user?.photoURL
-      });
-      console.log(result);
-      setUser(result);
-    })
+      if(user){
+          const result = await CreateUser({
+            name: user?.displayName,
+            email: user?.email,
+            pictureURL: user?.photoURL
+          });
+          console.log(result);
+          setUser(result);
+        }
+      })
     return () => unsubscribe();
   }, [])
 
