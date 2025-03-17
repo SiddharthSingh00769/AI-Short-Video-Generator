@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button'
 import Authentication from './Authentication'
 import { useAuthContext } from '../provider'
 import Link from 'next/link'
-import { Loader2Icon } from 'lucide-react'
 
 function Hero() {
   const {user} = useAuthContext();
@@ -16,9 +15,11 @@ function Hero() {
         ✨ Create, edit, and publish engaging shorts with ease!
       </p>
       <div className='mt-7 flex gap-8'>
+      <Link href={'/create-new-video'}>
         <Button size="lg" variant="secondary">Explore</Button>
+      </Link>
         {!user ? <Authentication>
-          <Button size="lg"><Loader2Icon className='animate-spin' />Please Wait...</Button>
+          <Button size="lg">Get Started</Button>
         </Authentication>
         : <Link href={'/dashboard'}>
             <Button size="lg">Dashboard</Button>
