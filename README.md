@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AI Short Video Generator
 
-## Getting Started
+## Description
 
-First, run the development server:
+The **AI Short Video Generator** is an innovative application that harnesses the power of artificial intelligence to create short videos. Built using **Next.js**, **React**, and **Tailwind CSS**, this project provides a seamless user experience for generating engaging video content.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **User  Authentication**: Secure login and registration using **Firebase**.
+- **Content Generation**: Utilizes the **Google Gemini API** to generate video scripts based on user input.
+- **Audio and Captioning**: Leverages the **Deepgram API** to convert text to audio and generate captions for videos.
+- **Image Prompts**: Automatically generates images from text prompts to enhance video content.
+- **Responsive Design**: Built with **Tailwind CSS** for a modern and responsive user interface.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Next.js**: Framework for server-side rendering and building React applications.
+- **React**: Library for building user interfaces.
+- **Tailwind CSS**: Utility-first CSS framework for styling.
+- **Convex Database**: For managing application data.
+- **Firebase**: For user authentication and real-time database.
+- **Google Gemini API**: For generating video scripts.
+- **Deepgram API**: For generating image prompts and captions.
 
-## Learn More
+### API Endpoints
 
-To learn more about Next.js, take a look at the following resources:
+- **GET /videos**: Retrieve a list of all videos stored in the database.
+- **POST /generate-content**: Generate video content from user input using Google's Gemini API.
+- **POST /generate-audio**: Convert text input to audio using Deepgram.
+- **POST /generate-captions**: Generate captions for audio or video files.
+- **POST /generate-image**: Generate an image from a text prompt.
+- **POST /save-video**: Save a video record to the database.
+- **DELETE /videos/{id}**: Delete a video from the database.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License.
