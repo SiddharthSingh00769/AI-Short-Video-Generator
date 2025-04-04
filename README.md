@@ -31,7 +31,3 @@ The **AI Short Video Generator** is an innovative application that harnesses the
 - **POST /generate-image**: Generate an image from a text prompt.
 - **POST /save-video**: Save a video record to the database.
 - **DELETE /videos/{id}**: Delete a video from the database.
-
-## License
-
-This project is licensed under the MIT License.
